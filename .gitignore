@@ -93,3 +93,13 @@ ENV/
 
 # proto file
 *_pb2.py
+
+# temp fime
+*~
+
+# data
+object_detection/data/faster_rcnn_resnet101_coco/
+object_detection/data/output/
+object_detection/data/ssd_mobilenet_v1_coco_11_06_2017/
+object_detection/data/train_script.txt
+
