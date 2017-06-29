@@ -66,18 +66,18 @@ def train(hps):
 
   truth = tf.argmax(model.labels, axis=1)
   predictions = tf.argmax(model.predictions, axis=1)
-  precision = tf.reduce_mean(tf.to_float(tf.equal(predictions, truth)))
+  accuracy = tf.reduce_mean(tf.to_float(tf.equal(predictions, truth)))
 
   summary_hook = tf.train.SummarySaverHook(
       save_steps=100,
       output_dir=FLAGS.train_dir,
       summary_op=tf.summary.merge([model.summaries,
-                                   tf.summary.scalar('Precision', precision)]))
+                                   tf.summary.scalar('accuracy', accuracy)]))
 
   logging_hook = tf.train.LoggingTensorHook(
       tensors={'step': model.global_step,
                'loss': model.cost,
-               'precision': precision},
+               'accuracy': accuracy},
       every_n_iter=100)
 
   class _LearningRateSetterHook(tf.train.SessionRunHook):
@@ -126,7 +126,7 @@ def evaluate(hps):
   sess = tf.Session(config=tf.ConfigProto(allow_soft_placement=True))
   tf.train.start_queue_runners(sess)
 
-  best_precision = 0.0
+  best_accuracy = 0.0
   while True:
     try:
       ckpt_state = tf.train.get_checkpoint_state(FLAGS.log_root)
@@ -150,20 +150,20 @@ def evaluate(hps):
       correct_prediction += np.sum(truth == predictions)
       total_prediction += predictions.shape[0]
 
-    precision = 1.0 * correct_prediction / total_prediction
-    best_precision = max(precision, best_precision)
+    accuracy = 1.0 * correct_prediction / total_prediction
+    best_accuracy = max(accuracy, best_accuracy)
 
-    precision_summ = tf.Summary()
-    precision_summ.value.add(
-        tag='Precision', simple_value=precision)
-    summary_writer.add_summary(precision_summ, train_step)
-    best_precision_summ = tf.Summary()
-    best_precision_summ.value.add(
-        tag='Best Precision', simple_value=best_precision)
-    summary_writer.add_summary(best_precision_summ, train_step)
+    accuracy_summ = tf.Summary()
+    accuracy_summ.value.add(
+        tag='accuracy', simple_value=accuracy)
+    summary_writer.add_summary(accuracy_summ, train_step)
+    best_accuracy_summ = tf.Summary()
+    best_accuracy_summ.value.add(
+        tag='Best accuracy', simple_value=best_accuracy)
+    summary_writer.add_summary(best_accuracy_summ, train_step)
     summary_writer.add_summary(summaries, train_step)
-    tf.logging.info('loss: %.3f, precision: %.3f, best precision: %.3f' %
-                    (loss, precision, best_precision))
+    tf.logging.info('loss: %.3f, accuracy: %.3f, best accuracy: %.3f' %
+                    (loss, accuracy, best_accuracy))
     summary_writer.flush()
 
     if FLAGS.eval_once:
