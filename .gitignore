@@ -96,6 +96,7 @@ ENV/
 
 # temp fime
 *~
+*.swp
 
 # data
 object_detection/data/faster_rcnn_resnet101_coco/

@@ -32,17 +32,18 @@ tf.app.flags.DEFINE_string('train_data_path', '',
 tf.app.flags.DEFINE_string('eval_data_path', '',
                            'Filepattern for eval data')
 tf.app.flags.DEFINE_integer('image_size', 32, 'Image side length.')
-tf.app.flags.DEFINE_string('train_dir', '',
+tf.app.flags.DEFINE_string('log_name', '',
                            'Directory to keep training outputs.')
+tf.app.flags.DEFINE_integer('max_steps', 100000, 'Maximum steps')
 tf.app.flags.DEFINE_string('eval_dir', '',
                            'Directory to keep eval outputs.')
 tf.app.flags.DEFINE_integer('eval_batch_count', 50,
                             'Number of batches to eval.')
 tf.app.flags.DEFINE_bool('eval_once', False,
                          'Whether evaluate the model only once.')
-tf.app.flags.DEFINE_string('log_root', '',
+tf.app.flags.DEFINE_string('out_dir', '',
                            'Directory to keep the checkpoints. Should be a '
-                           'parent directory of FLAGS.train_dir/eval_dir.')
+                           'parent directory of eval_dir.')
 tf.app.flags.DEFINE_integer('num_gpus', 0,
                             'Number of gpus used for training. (0 or 1)')
 
@@ -70,7 +71,7 @@ def train(hps):
 
   summary_hook = tf.train.SummarySaverHook(
       save_steps=100,
-      output_dir=FLAGS.train_dir,
+      output_dir=FLAGS.log_name,
       summary_op=tf.summary.merge([model.summaries,
                                    tf.summary.scalar('accuracy', accuracy)]))
 
@@ -103,14 +104,15 @@ def train(hps):
         self._lrn_rate = 0.0001
 
   with tf.train.MonitoredTrainingSession(
-      checkpoint_dir=FLAGS.log_root,
+      checkpoint_dir=FLAGS.out_dir,
       hooks=[logging_hook, _LearningRateSetterHook()],
       chief_only_hooks=[summary_hook],
       # Since we provide a SummarySaverHook, we need to disable default
       # SummarySaverHook. To do that we set save_summaries_steps to 0.
       save_summaries_steps=0,
       config=tf.ConfigProto(allow_soft_placement=True)) as mon_sess:
-    while not mon_sess.should_stop():
+    #while not mon_sess.should_stop():
+    for step in xrange(FLAGS.max_steps):
       mon_sess.run(model.train_op)
 
 
@@ -129,12 +131,12 @@ def evaluate(hps):
   best_accuracy = 0.0
   while True:
     try:
-      ckpt_state = tf.train.get_checkpoint_state(FLAGS.log_root)
+      ckpt_state = tf.train.get_checkpoint_state(FLAGS.out_dir)
     except tf.errors.OutOfRangeError as e:
       tf.logging.error('Cannot restore checkpoint: %s', e)
       continue
     if not (ckpt_state and ckpt_state.model_checkpoint_path):
-      tf.logging.info('No model to eval yet at %s', FLAGS.log_root)
+      tf.logging.info('No model to eval yet at %s', FLAGS.out_dir)
       continue
     tf.logging.info('Loading checkpoint %s', ckpt_state.model_checkpoint_path)
     saver.restore(sess, ckpt_state.model_checkpoint_path)
