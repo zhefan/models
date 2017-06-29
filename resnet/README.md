@@ -85,7 +85,7 @@ $ bazel build -c opt --config=cuda resnet/...
 # Train the model.
 $ bazel-bin/resnet/resnet_main --train_data_path=cifar10/data_batch* \
                                --out_dir=resnet/output \
-                               --log_name=resnet/log/36_layers \
+                               --log_name=resnet/log/32_layers \
                                --dataset='cifar10' \
                                --num_gpus=1
 
