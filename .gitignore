@@ -105,6 +105,7 @@ object_detection/data/ssd_mobilenet_v1_coco_11_06_2017/
 object_detection/data/train_script.txt
 cifar10
 cifar100
+cifar
 
 # bazel
 bazel-*
