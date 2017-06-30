@@ -32,6 +32,7 @@ tf.app.flags.DEFINE_string('train_data_path', '',
 tf.app.flags.DEFINE_string('eval_data_path', '',
                            'Filepattern for eval data')
 tf.app.flags.DEFINE_integer('image_size', 32, 'Image side length.')
+tf.app.flags.DEFINE_integer('num_res_units', 5, 'Number of residual units')
 tf.app.flags.DEFINE_string('log_name', '',
                            'Directory to keep training outputs.')
 tf.app.flags.DEFINE_integer('max_steps', 100000, 'Maximum steps')
@@ -196,7 +197,7 @@ def main(_):
                              num_classes=num_classes,
                              min_lrn_rate=0.0001,
                              lrn_rate=0.1,
-                             num_residual_units=18,
+                             num_residual_units=FLAGS.num_res_units,
                              use_bottleneck=False,
                              weight_decay_rate=0.0002,
                              relu_leakiness=0.1,
