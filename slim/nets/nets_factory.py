@@ -31,10 +31,12 @@ from nets import resnet_v1
 from nets import resnet_v2
 from nets import vgg
 from nets import vgg_cifar
+from nets import alexnet_cifar
 
 slim = tf.contrib.slim
 
 networks_map = {'alexnet_v2': alexnet.alexnet_v2,
+                'alexnet_v2_cifar': alexnet_cifar.alexnet_v2,
                 'cifarnet': cifarnet.cifarnet,
                 'overfeat': overfeat.overfeat,
                 'vgg_a': vgg.vgg_a,
@@ -60,6 +62,7 @@ networks_map = {'alexnet_v2': alexnet.alexnet_v2,
                }
 
 arg_scopes_map = {'alexnet_v2': alexnet.alexnet_v2_arg_scope,
+                  'alexnet_v2_cifar': alexnet_cifar.alexnet_v2_arg_scope,
                   'cifarnet': cifarnet.cifarnet_arg_scope,
                   'overfeat': overfeat.overfeat_arg_scope,
                   'vgg_a': vgg.vgg_arg_scope,

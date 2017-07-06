@@ -81,4 +81,24 @@ python train_image_classifier.py \
   --learning_rate_decay_factor=0.1 \
   --num_epochs_per_decay=100 \
   --weight_decay=0.004
+    
+# alexnet_v2
+python train_image_classifier.py \
+  --train_dir=cifar10/alexnet_v2 \
+  --dataset_name=cifar10 \
+  --dataset_split_name=train \
+  --dataset_dir=cifar10/ \
+  --model_name=alexnet_v2_cifar \
+  --preprocessing_name=cifarnet \
+  --max_number_of_steps=60000 \
+  --batch_size=128 \
+  --train_image_size=40 \
+  --save_interval_secs=300 \
+  --save_summaries_secs=30   \
+  --log_every_n_steps=100 \
+  --optimizer=sgd \
+  --learning_rate=0.1 \
+  --learning_rate_decay_factor=0.1 \
+  --num_epochs_per_decay=100 \
+  --weight_decay=0.004
   
