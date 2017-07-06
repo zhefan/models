@@ -40,7 +40,8 @@ python eval_image_classifier.py \
   --dataset_split_name=test \
   --dataset_dir=cifar10/ \
   --preprocessing_name=cifarnet \
-  --model_name=resnet_v2_50
+  --model_name=resnet_v2_50 \
+  --eval_image_size=40
   
 # resnet_v2_101
 python train_image_classifier.py \
@@ -77,11 +78,22 @@ python train_image_classifier.py \
   --save_summaries_secs=30   \
   --log_every_n_steps=100 \
   --optimizer=sgd \
-  --learning_rate=0.1 \
+  --learning_rate=0.3 \
   --learning_rate_decay_factor=0.1 \
   --num_epochs_per_decay=100 \
   --weight_decay=0.004
     
+# Run evaluation.
+python eval_image_classifier.py \
+  --checkpoint_path=cifar10/vgg_16 \
+  --eval_dir=cifar10/vgg_16 \
+  --dataset_name=cifar10 \
+  --dataset_split_name=test \
+  --dataset_dir=cifar10/ \
+  --preprocessing_name=cifarnet \
+  --model_name=vgg_16 \
+  --eval_image_size=40
+  
 # alexnet_v2
 python train_image_classifier.py \
   --train_dir=cifar10/alexnet_v2 \
