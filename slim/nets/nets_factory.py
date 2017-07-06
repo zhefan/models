@@ -30,6 +30,7 @@ from nets import overfeat
 from nets import resnet_v1
 from nets import resnet_v2
 from nets import vgg
+from nets import vgg_cifar
 
 slim = tf.contrib.slim
 
@@ -39,6 +40,8 @@ networks_map = {'alexnet_v2': alexnet.alexnet_v2,
                 'vgg_a': vgg.vgg_a,
                 'vgg_16': vgg.vgg_16,
                 'vgg_19': vgg.vgg_19,
+                'vgg_16_cifar': vgg_cifar.vgg_16,
+                'vgg_19_cifar': vgg_cifar.vgg_19,
                 'inception_v1': inception.inception_v1,
                 'inception_v2': inception.inception_v2,
                 'inception_v3': inception.inception_v3,
@@ -62,6 +65,8 @@ arg_scopes_map = {'alexnet_v2': alexnet.alexnet_v2_arg_scope,
                   'vgg_a': vgg.vgg_arg_scope,
                   'vgg_16': vgg.vgg_arg_scope,
                   'vgg_19': vgg.vgg_arg_scope,
+                  'vgg_16_cifar': vgg_cifar.vgg_arg_scope,
+                  'vgg_19_cifar': vgg_cifar.vgg_arg_scope,
                   'inception_v1': inception.inception_v3_arg_scope,
                   'inception_v2': inception.inception_v3_arg_scope,
                   'inception_v3': inception.inception_v3_arg_scope,
