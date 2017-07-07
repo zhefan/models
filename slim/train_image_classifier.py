@@ -119,6 +119,10 @@ tf.app.flags.DEFINE_float(
 
 tf.app.flags.DEFINE_float('rmsprop_decay', 0.9, 'Decay term for RMSProp.')
 
+tf.app.flags.DEFINE_boolean('rl_loss', False,
+                            'regularization_loss')
+
+
 #######################
 # Learning Rate Flags #
 #######################
@@ -530,6 +534,7 @@ def main(_):
     total_loss, clones_gradients = model_deploy.optimize_clones(
         clones,
         optimizer,
+        FLAGS.rl_loss,
         var_list=variables_to_train)
     # Add total_loss to summary.
     summaries.add(tf.summary.scalar('total_loss', total_loss))

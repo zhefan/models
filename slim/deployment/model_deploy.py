@@ -263,6 +263,7 @@ def _optimize_clone(optimizer, clone, num_clones, regularization_losses,
 
 
 def optimize_clones(clones, optimizer,
+                    rl_loss=False,
                     regularization_losses=None,
                     **kwargs):
   """Compute clone losses and gradients for the given list of `Clones`.
@@ -288,7 +289,7 @@ def optimize_clones(clones, optimizer,
   grads_and_vars = []
   clones_losses = []
   num_clones = len(clones)
-  if regularization_losses is None:
+  if rl_loss is True:
     regularization_losses = tf.get_collection(
         tf.GraphKeys.REGULARIZATION_LOSSES)
   for clone in clones:
