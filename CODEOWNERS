@@ -5,7 +5,7 @@ autoencoders/* @snurkabill
 cognitive_mapping_and_planning/* @s-gupta
 compression/* @nmjohn
 differential_privacy/* @panyx0718
-domain_adaptation/* @bousmalis
+domain_adaptation/* @bousmalis @ddohan
 im2txt/* @cshallue
 inception/* @shlens @vincentvanhoucke
 learning_to_remember_rare_events/* @lukaszkaiser @ofirnachum
@@ -17,7 +17,9 @@ neural_programmer/* @arvind2505
 next_frame_prediction/* @panyx0718
 object_detection/* @jch1 @tombstone @derekjchow @jesu9 @dreamdragon
 pcl_rl/* @ofirnachum
+ptn/* @xcyan @arkanath @hellojas @honglaklee
 real_nvp/* @laurent-dinh
+rebar/* @gjtucker
 resnet/* @panyx0718
 skip_thoughts/* @cshallue
 slim/* @sguada @nathansilberman
